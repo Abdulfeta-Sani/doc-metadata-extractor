@@ -20,5 +20,8 @@ This project allows users to upload PDF documents, extract metadata, and search 
 /backend - FastAPI server  
 /frontend - React app  
 
-## Status
-Phase 1 - Setup in progress
+## API Endpoints
+
+- POST /upload → Upload PDF and extract metadata  
+- GET /documents → List and search documents  
+- GET /documents/{id} → Get document details 
