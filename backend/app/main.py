@@ -6,11 +6,22 @@ import os
 from .database import SessionLocal, engine, Base
 from . import models, schemas, crud
 from .utils.pdf_extractor import extract_pdf_metadata
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Create DB tables
 Base.metadata.create_all(bind=engine)
-
+    
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
