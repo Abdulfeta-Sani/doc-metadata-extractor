@@ -55,6 +55,9 @@ def upload_pdf(file: UploadFile = File(...), db: Session = Depends(get_db)):
 
     return document
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the PDF Metadata Extractor API!"}
 
 @app.get("/documents", response_model=list[schemas.DocumentResponse])
 def list_documents(search: str = None, db: Session = Depends(get_db)):

@@ -1,62 +1,48 @@
-### 📄 Document Metadata Extraction & Search Interface
+# 📄 Document Metadata Extraction & Search Interface
 
 ## 🚀 Overview
 
-This project is a full-stack system that allows users to upload PDF documents, automatically extract metadata, store it in a database, and retrieve or search through the stored documents.
+This project is a full-stack application that allows users to upload PDF documents, automatically extract metadata, store it in a database, and search through stored documents.
 
-## 🧩 Problem Statement
+It demonstrates backend API development, file handling, database design, and frontend integration.
 
-# The goal is to build a system that:
+---
 
-* Accepts PDF uploads
-* Extracts key metadata:
+## 🧩 Features
+
+* Upload PDF documents
+* Extract metadata:
 
   * Title
   * Author
-  * Number of pages
-  * First 200 characters of text
-  * Stores the extracted data
-* Provides endpoints to retrieve and search documents
+  * Page count
+  * Text excerpt (first 200 characters)
+* Store metadata in SQLite database
+* View all uploaded documents
+* Search documents by title or author
+
+---
 
 ## 🛠️ Tech Stack
 
-## Backend
+### Backend
 
-* FastAPI — API framework
-* SQLite — Database
-* SQLAlchemy — ORM
-* PyMuPDF (fitz) — PDF processing
+* FastAPI
+* SQLite
+* SQLAlchemy
+* PyMuPDF
 
-## Frontend
+### Frontend
 
 * React (Vite + TypeScript)
 * Tailwind CSS
 
-## 📦 Features
-
-## ✅ Completed (Phase 4 - Full System)
-
-* Upload PDF files
-* Extract metadata from PDF
-* Store metadata in SQLite database
-* Retrieve all documents
-* Retrieve a document by ID
-* Search documents by title or author
-* Frontend UI for uploading PDFs
-* Display list of uploaded documents
-* Search interface integrated with backend
-
-## ⏳ Upcoming (Phase 5+)
-
-* UI/UX improvements
-* Error handling enhancements
-* Better loading states and feedback
-* Screenshots and final documentation
+---
 
 ## 📂 Project Structure
 
+```
 doc-metadata-extractor/
-│
 ├── backend/
 │   └── app/
 │       ├── main.py
@@ -64,111 +50,115 @@ doc-metadata-extractor/
 │       ├── models.py
 │       ├── schemas.py
 │       ├── crud.py
-│       └── utils/
-│           └── pdf_extractor.py
+│       └── utils/pdf_extractor.py
 │
 ├── frontend/
 │   └── src/
 │       ├── api/
-│       │   └── documents.ts
 │       ├── components/
-│       │   ├── Upload.tsx
-│       │   └── DocumentList.tsx
 │       ├── App.tsx
 │       └── main.tsx
 │
 └── README.md
+```
+
+---
 
 ## 🔌 API Endpoints
 
 #### POST /upload
-
-```
-- Accepts a PDF file
-- Extracts metadata
-- Stores it in the database
-```
+  - Upload a PDF file and extract metadata
 
 #### GET /documents
-
-```
-- Returns all uploaded documents
-```
+  - Retrieve all documents metadata
 
 #### GET /documents?search=keyword
-
-```
-- Filters by title or author (case-insensitive)
-```
+  - Search documents by title or author
 
 #### GET /documents/{id}
+  - Retrieve a specific document
 
-```
-- Returns a single document
-```
-
-## 📊 Example Response
-
-{
-"id": 1,
-"title": "Project Report",
-"author": "John Doe",
-"page_count": 12,
-"excerpt": "This project focuses on...",
-"uploaded_at": "2026-03-13T09:00:00Z"
-}
+---
 
 ## ⚙️ Setup Instructions
 
-### 🔹 Backend Setup
+### Backend
+
+  1. Open a terminal in the backend directory.
+  2. Create and activate a virtual environment.
+  3. Install dependencies.
+  4. Run the API server.
+
+* Backend URL: http://127.0.0.1:8000
 
 ```
--cd backend
--python -m venv venv
--source venv/bin/activate   # (Linux/macOS)
--venv\Scripts\activate      # (Windows)
+cd backend
+python -m venv venv
+source venv/bin/activate   # Linux/macOS
+venv\Scripts\activate      # Windows
+
+pip install fastapi uvicorn sqlalchemy pymupdf python-multipart
+uvicorn app.main:app --reload
 ```
 
-* pip install fastapi uvicorn sqlalchemy pymupdf python-multipart
-* uvicorn app.main:app --reload
+API Docs:
+http://127.0.0.1:8000/docs
 
-# 👉 Access API docs:
+---
 
-* http://127.0.0.1:8000/docs
+### Frontend
 
-### 🔹 Frontend Setup
-
+  1. Open a second terminal in the frontend directory.
+  2. Install dependencies.
+  3. Start the development server.
 ```
--cd frontend
--npm install
--npm run dev
+cd frontend
+npm install
+npm run dev
 ```
 
-# 👉 Access frontend:
+  App will be available at:
+  * http://localhost:5173
 
-* http://localhost:5173
+  Make sure the backend server is running at:
+  * http://127.0.0.1:8000
 
-## 🧠 Design Decisions
+---
 
-FastAPI was chosen for its simplicity and performance
-SQLite is used for lightweight storage suitable for small systems
-PyMuPDF provides efficient PDF parsing and metadata extraction
-Metadata is extracted once and stored to improve performance
-Search is implemented via query parameters for simplicity and flexibility
-Separation of backend and frontend improves scalability and maintainability
+## 🔄 Data Flow
 
-# 📌 Current Status
+1. User selects a PDF file in the UI.
+2. Frontend sends file to POST /upload.
+3. Backend saves file and extracts metadata with PyMuPDF.
+4. Backend writes metadata to SQLite.
+5. Frontend fetches records from GET /documents.
+6. User can search with GET /documents?search=....
 
-✅ Phase 1 — Project Setup
-✅ Phase 2 — System Design
-✅ Phase 3 — Backend Implementation
-✅ Phase 4 — Frontend Development & Integration
-🔄 Phase 5 — Refinement & UI Improvements
+---
+## Notes
+If PDF metadata is missing, fallback values are used:
+  - Unknown Title
+  - Unknown Author
+
+## 📌 Status
+
+✔ Backend completed
+✔ Frontend completed
+✔ Full system working
+
+---s
 
 # 📷 Screenshots
 
-To be added in later phases
+![App Dashboard Interface](./screenshots/dashboard.png)
+![search and upload file UI](./screenshots/search_and_upload_file_UI%20.png)
+![List of documents metadata](./screenshots/List_of_documents_metadata.png)
 
-# 📄 License
+---
+## Future Improvements
+  - Add unique filename generation
+  - Add file size limits and stronger validation
+  - Add pagination for large document lists
+## 📄 License
 
-This project is for educational purposes.
+This project is for educational purpose.
